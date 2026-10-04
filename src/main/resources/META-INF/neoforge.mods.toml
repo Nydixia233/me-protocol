@@ -1,0 +1,31 @@
+modLoader="javafml"
+loaderVersion="[1,)"
+license="TBD"
+
+[[mods]]
+modId="meprotocol"
+version="@mod_version@"
+displayName="ME Protocol"
+description="An AE2-focused technology expansion."
+authors="ME Protocol Team"
+
+[[dependencies.meprotocol]]
+modId="neoforge"
+type="REQUIRED"
+versionRange="@neoforge_version_range@"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.meprotocol]]
+modId="minecraft"
+type="REQUIRED"
+versionRange="[@minecraft_version@]"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.meprotocol]]
+modId="ae2"
+type="REQUIRED"
+versionRange="@ae2_version_range@"
+ordering="AFTER"
+side="BOTH"

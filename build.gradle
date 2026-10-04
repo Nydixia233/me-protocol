@@ -1,0 +1,56 @@
+plugins {
+    id 'net.neoforged.moddev'
+}
+
+group = providers.gradleProperty('mod_group').get()
+version = providers.gradleProperty('mod_version').get()
+
+base {
+    archivesName = 'meprotocol'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+dependencies {
+    compileOnly "org.appliedenergistics:appliedenergistics2:$ae2_version:api"
+    runtimeOnly "org.appliedenergistics:appliedenergistics2:$ae2_version"
+}
+
+neoForge {
+    version = neoforge_version
+
+    mods {
+        meprotocol {
+            sourceSet sourceSets.main
+        }
+    }
+
+    runs {
+        client {
+            client()
+            gameDirectory = project.file('run/client')
+        }
+        server {
+            server()
+            gameDirectory = project.file('run/server')
+        }
+    }
+}
+
+tasks.withType(ProcessResources).configureEach {
+    def metadata = [
+            mod_version: project.version.toString(),
+            minecraft_version: minecraft_version.toString(),
+            neoforge_version_range: neoforge_version_range.toString(),
+            ae2_version_range: "[$ae2_version,)".toString()
+    ]
+
+    inputs.properties(metadata)
+    filesMatching('META-INF/neoforge.mods.toml') {
+        filter(org.apache.tools.ant.filters.ReplaceTokens, tokens: metadata)
+    }
+}
